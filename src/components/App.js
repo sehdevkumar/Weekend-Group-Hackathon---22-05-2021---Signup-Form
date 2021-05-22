@@ -29,7 +29,7 @@ const App = () => {
    }
    
    const submitHandler = (e)=>{
-       e.preventDefault();
+//        e.preventDefault();
        if(getName==="" && getEmail==="" && getPassword==="" && getGender==="" && getPhone===""){
           setError("All fields are mandatory");
        }
@@ -105,7 +105,7 @@ const App = () => {
           <br></br>
           Password <input data-testid = 'password' type="password" onChange={putPasswordHandler}/>
           <br></br>
-          Submit button <button data-testid = 'submit'  onClick={submitHandler} >Submit</button>
+          Submit button <button type='submit' data-testid = 'submit'  onClick={submitHandler} >Submit</button>
        </form>
     </div>
   )
