@@ -9,8 +9,16 @@ const App = () => {
    const [getPhone,setPhone] = useState("");
    const [getPassword,setPassword] = useState("");
    const [getError,setError] = useState("");
-   const [getSuccess,setSuccess] = useState("");
+   const [getSuccess,setSuccess] = useState(false);
+   const [getMsg,setMsg] = useState("");
    
+   useEffect(()=>{
+      setPassword("");
+      setPhone("");
+      setName("");
+      setEmail("");
+      setGender("");
+   },[getSuccess]);
    
    const putNameHandler=(e)=>{
        setName(e.target.value);
@@ -29,7 +37,7 @@ const App = () => {
    }
    
    const submitHandler = (e)=>{
-//        e.preventDefault();
+       e.preventDefault();
        if(getName==="" && getEmail==="" && getPassword==="" && getGender==="" && getPhone===""){
           setError("All fields are mandatory");
        }
@@ -66,9 +74,11 @@ const App = () => {
                            setError("Password must contain atleast 6 letters")
                         }
                         else{
-                           
+                           setSuccess(true);
                            let out = getEmail.split("@");
-                           setError(out[0]);
+                           setMsg(out[0]);
+                          
+                           
 
                         }
                      
@@ -89,23 +99,24 @@ const App = () => {
   return (
     <div id="main">
        <form>
-          {getError}
+           {!getSuccess && getError}
+           {getSuccess && getMsg}
           <br></br>
-          Name<input type="text" data-testid = 'name' onChange={putNameHandler}/>
+          Name<input type="text" value={getName} data-testid = 'name' onChange={putNameHandler}/>
           <br></br>
-          Email address<input type="text" data-testid = 'email' onChange={putEmailHandler} />
+          Email address<input value={getEmail} type="text" data-testid = 'email' onChange={putEmailHandler} />
           <br></br>
-          Gender<select data-testid='gender' value="male"  onChange={putGenderHandler}>
+          Gender<select  data-testid='gender' value={getGender}  onChange={putGenderHandler}>
              <option value="male">male</option>
              <option value="female">female</option>
              <option value="other">other</option>
              </select>
           <br></br>
-          Phone Number <input type="text" data-testid = 'phoneNumber' onChange={putPhoneHandler}/>
+          Phone Number <input type="text" value={getPhone} data-testid = 'phoneNumber' onChange={putPhoneHandler}/>
           <br></br>
-          Password <input data-testid = 'password' type="password" onChange={putPasswordHandler}/>
+          Password <input data-testid = 'password' value={getPassword} type="password" onChange={putPasswordHandler}/>
           <br></br>
-          Submit button <button type='submit' data-testid = 'submit'  onClick={submitHandler} >Submit</button>
+          Submit button <button type="submit" data-testid = 'submit'  onClick={submitHandler} >Submit</button>
        </form>
     </div>
   )
